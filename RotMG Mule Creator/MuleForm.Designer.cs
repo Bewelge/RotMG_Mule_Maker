@@ -45,6 +45,9 @@
             this.muleformat = new System.Windows.Forms.CheckBox();
             this.open_acc_folder = new System.Windows.Forms.Button();
             this.btn_about = new System.Windows.Forms.Button();
+            this.progressBar1 = new System.Windows.Forms.ProgressBar();
+            this.label7 = new System.Windows.Forms.Label();
+            this.counter = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.amount_box)).BeginInit();
             this.SuspendLayout();
             // 
@@ -54,6 +57,7 @@
             this.create_mules.Name = "create_mules";
             this.create_mules.Size = new System.Drawing.Size(123, 23);
             this.create_mules.TabIndex = 0;
+            this.create_mules.TabStop = false;
             this.create_mules.Text = "Create me dat mules!!!";
             this.create_mules.UseVisualStyleBackColor = true;
             this.create_mules.Click += new System.EventHandler(this.create_mules_Click);
@@ -64,6 +68,7 @@
             this.frontMail.Name = "frontMail";
             this.frontMail.Size = new System.Drawing.Size(265, 20);
             this.frontMail.TabIndex = 1;
+            this.frontMail.TabStop = false;
             this.frontMail.Text = "MyMule";
             // 
             // domain
@@ -72,6 +77,7 @@
             this.domain.Name = "domain";
             this.domain.Size = new System.Drawing.Size(265, 20);
             this.domain.TabIndex = 2;
+            this.domain.TabStop = false;
             this.domain.Text = "YourDomain.com";
             // 
             // amount_box
@@ -85,11 +91,13 @@
             this.amount_box.Name = "amount_box";
             this.amount_box.Size = new System.Drawing.Size(103, 20);
             this.amount_box.TabIndex = 3;
+            this.amount_box.TabStop = false;
             this.amount_box.Value = new decimal(new int[] {
             1,
             0,
             0,
             0});
+            this.amount_box.ValueChanged += new System.EventHandler(this.amount_box_ValueChanged);
             // 
             // label1
             // 
@@ -134,6 +142,7 @@
             this.password.PasswordChar = '*';
             this.password.Size = new System.Drawing.Size(265, 20);
             this.password.TabIndex = 9;
+            this.password.TabStop = false;
             this.password.Text = "YourPassword";
             // 
             // tb_status
@@ -145,6 +154,7 @@
             this.tb_status.ScrollBars = System.Windows.Forms.ScrollBars.Both;
             this.tb_status.Size = new System.Drawing.Size(507, 291);
             this.tb_status.TabIndex = 10;
+            this.tb_status.TabStop = false;
             // 
             // label6
             // 
@@ -171,6 +181,7 @@
             this.cb_desktop.Name = "cb_desktop";
             this.cb_desktop.Size = new System.Drawing.Size(95, 17);
             this.cb_desktop.TabIndex = 13;
+            this.cb_desktop.TabStop = false;
             this.cb_desktop.Text = "Save in .txt file";
             this.cb_desktop.UseVisualStyleBackColor = true;
             // 
@@ -181,6 +192,7 @@
             this.muleformat.Name = "muleformat";
             this.muleformat.Size = new System.Drawing.Size(149, 17);
             this.muleformat.TabIndex = 14;
+            this.muleformat.TabStop = false;
             this.muleformat.Text = "Save as Muledump format";
             this.muleformat.UseVisualStyleBackColor = true;
             // 
@@ -190,6 +202,7 @@
             this.open_acc_folder.Name = "open_acc_folder";
             this.open_acc_folder.Size = new System.Drawing.Size(160, 23);
             this.open_acc_folder.TabIndex = 15;
+            this.open_acc_folder.TabStop = false;
             this.open_acc_folder.Text = "Open Account Folder";
             this.open_acc_folder.UseVisualStyleBackColor = true;
             this.open_acc_folder.Click += new System.EventHandler(this.open_acc_folder_Click);
@@ -200,15 +213,48 @@
             this.btn_about.Name = "btn_about";
             this.btn_about.Size = new System.Drawing.Size(75, 23);
             this.btn_about.TabIndex = 16;
+            this.btn_about.TabStop = false;
             this.btn_about.Text = "About";
             this.btn_about.UseVisualStyleBackColor = true;
-            this.btn_about.Click += new System.EventHandler(this.button1_Click);
+            this.btn_about.Click += new System.EventHandler(this.btn_about_Click);
+            // 
+            // progressBar1
+            // 
+            this.progressBar1.Location = new System.Drawing.Point(84, 435);
+            this.progressBar1.Name = "progressBar1";
+            this.progressBar1.Size = new System.Drawing.Size(351, 23);
+            this.progressBar1.Step = 1;
+            this.progressBar1.TabIndex = 17;
+            // 
+            // label7
+            // 
+            this.label7.AutoSize = true;
+            this.label7.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label7.Location = new System.Drawing.Point(12, 438);
+            this.label7.Name = "label7";
+            this.label7.Size = new System.Drawing.Size(66, 16);
+            this.label7.TabIndex = 18;
+            this.label7.Text = "Progress:";
+            // 
+            // counter
+            // 
+            this.counter.AutoSize = true;
+            this.counter.FlatStyle = System.Windows.Forms.FlatStyle.System;
+            this.counter.Location = new System.Drawing.Point(441, 440);
+            this.counter.Name = "counter";
+            this.counter.RightToLeft = System.Windows.Forms.RightToLeft.No;
+            this.counter.Size = new System.Drawing.Size(44, 13);
+            this.counter.TabIndex = 19;
+            this.counter.Text = "Counter";
             // 
             // MuleForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(531, 441);
+            this.ClientSize = new System.Drawing.Size(531, 463);
+            this.Controls.Add(this.counter);
+            this.Controls.Add(this.label7);
+            this.Controls.Add(this.progressBar1);
             this.Controls.Add(this.btn_about);
             this.Controls.Add(this.open_acc_folder);
             this.Controls.Add(this.muleformat);
@@ -256,6 +302,9 @@
         private System.Windows.Forms.CheckBox cb_desktop;
         private System.Windows.Forms.CheckBox muleformat;
         private System.Windows.Forms.Button btn_about;
+        private System.Windows.Forms.ProgressBar progressBar1;
+        private System.Windows.Forms.Label label7;
+        private System.Windows.Forms.Label counter;
     }
 }
 

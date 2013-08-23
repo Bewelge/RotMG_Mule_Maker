@@ -14,7 +14,7 @@ namespace RotMG_Mule_Creator
 {
     public partial class MuleForm : Form
     {
-        int i = 1;
+        int i = 0;
         int fails = 0;
         int success = 0;
         string status;
@@ -34,11 +34,29 @@ namespace RotMG_Mule_Creator
                 MessageBox.Show("Failed to create MuleMaker folder, do your run it as admin?", "Failed to create folder", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
             InitializeComponent();
+
+            this.counter.Text = string.Format("{0} / {1}", i, Convert.ToInt32(amount_box.Value));
+            progressBar1.Maximum = Convert.ToInt32(amount_box.Value);
         }
 
         private void create_mules_Click(object sender, EventArgs e)
         {
-            CreateMule(Convert.ToInt32(amount_box.Value));
+            tb_status.Clear();
+            progressBar1.Value = 0;
+            progressBar1.Minimum = 0;
+            progressBar1.Maximum = Convert.ToInt32(amount_box.Value);
+            this.counter.Text = string.Format("{0} / {1}", 0, Convert.ToInt32(amount_box.Value));
+
+            if (Convert.ToInt32(amount_box.Value) >= 500)
+            {
+                DialogResult drg = MessageBox.Show("This can take a while, do you want continue?", "This will take a while", MessageBoxButtons.YesNo, MessageBoxIcon.Information);
+                if (drg == System.Windows.Forms.DialogResult.Yes)
+                    CreateMule(Convert.ToInt32(amount_box.Value));
+            }
+            else
+            {
+                CreateMule(Convert.ToInt32(amount_box.Value));
+            }
         }
 
         void CreateMule(int count)
@@ -48,6 +66,7 @@ namespace RotMG_Mule_Creator
 
             for (i = 1; i <= count; i++)
             {
+                progressBar1.Increment(1);
                 try
                 {
                     WebRequest webRequest = (WebRequest)WebRequest.Create("https://realmofthemadgod.appspot.com/account/register?guid=DDDDDDDD30A5B289EA856859A8&newGUID=" + frontMail.Text + i + "@" + domain.Text + "&ignore=7915&newPassword=" + password.Text + "&isAgeVerified=1");
@@ -98,23 +117,32 @@ namespace RotMG_Mule_Creator
 " + ex);
                     }
                 }
+                counter.Text = string.Format("{0} / {1}", i, count);
             }
             MessageBox.Show(string.Format("{0} Mules Successful Created\n{1} Mules failed to create!", success, fails), "Summary!", MessageBoxButtons.OK, MessageBoxIcon.Information);
         }
 
         private void open_acc_folder_Click(object sender, EventArgs e)
         {
-            var dir = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData) + @"\RotMG Mule Maker";
-            if (!System.IO.Directory.Exists(dir))
+            try
             {
-                Directory.CreateDirectory(dir);
+                Process.Start(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData) + @"\RotMG Mule Maker");
             }
-            Process.Start(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData) + @"\RotMG Mule Maker");
+            catch
+            {
+                MessageBox.Show("Can't open MuleMaker folder", "Failed to open folder", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
         }
 
-        private void button1_Click(object sender, EventArgs e)
+        private void btn_about_Click(object sender, EventArgs e)
         {
             new About().Show();
+        }
+
+        private void amount_box_ValueChanged(object sender, EventArgs e)
+        {
+            i = 0;
+            this.counter.Text = string.Format("{0} / {1}", i, Convert.ToInt32(amount_box.Value));
         }
     }
 }
