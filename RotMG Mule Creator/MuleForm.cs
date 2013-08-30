@@ -120,6 +120,7 @@ namespace RotMG_Mule_Creator
                 }
                 tb_status.Text = tb_status.Text + frontMail.Text + i.ToString() + "@" + domain.Text + " - Password: " + password.Text + "   -   " + status + @"
 ";
+                tb_status.Update();
                 counter.Text = string.Format("{0} / {1}", i, count);
             }
             MessageBox.Show(string.Format("{0} Mules Successful Created\n{1} Mules failed to create!", success, fails), "Summary!", MessageBoxButtons.OK, MessageBoxIcon.Information);
