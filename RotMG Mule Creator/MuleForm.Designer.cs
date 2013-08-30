@@ -41,7 +41,7 @@
             this.tb_status = new System.Windows.Forms.TextBox();
             this.label6 = new System.Windows.Forms.Label();
             this.label4 = new System.Windows.Forms.Label();
-            this.cb_desktop = new System.Windows.Forms.CheckBox();
+            this.cb_save = new System.Windows.Forms.CheckBox();
             this.muleformat = new System.Windows.Forms.CheckBox();
             this.open_acc_folder = new System.Windows.Forms.Button();
             this.btn_about = new System.Windows.Forms.Button();
@@ -174,16 +174,16 @@
             this.label4.TabIndex = 12;
             this.label4.Text = "Your Mules:";
             // 
-            // cb_desktop
+            // cb_save
             // 
-            this.cb_desktop.AutoSize = true;
-            this.cb_desktop.Location = new System.Drawing.Point(141, 410);
-            this.cb_desktop.Name = "cb_desktop";
-            this.cb_desktop.Size = new System.Drawing.Size(95, 17);
-            this.cb_desktop.TabIndex = 13;
-            this.cb_desktop.TabStop = false;
-            this.cb_desktop.Text = "Save in .txt file";
-            this.cb_desktop.UseVisualStyleBackColor = true;
+            this.cb_save.AutoSize = true;
+            this.cb_save.Location = new System.Drawing.Point(141, 410);
+            this.cb_save.Name = "cb_save";
+            this.cb_save.Size = new System.Drawing.Size(95, 17);
+            this.cb_save.TabIndex = 13;
+            this.cb_save.TabStop = false;
+            this.cb_save.Text = "Save in .txt file";
+            this.cb_save.UseVisualStyleBackColor = true;
             // 
             // muleformat
             // 
@@ -258,7 +258,7 @@
             this.Controls.Add(this.btn_about);
             this.Controls.Add(this.open_acc_folder);
             this.Controls.Add(this.muleformat);
-            this.Controls.Add(this.cb_desktop);
+            this.Controls.Add(this.cb_save);
             this.Controls.Add(this.label4);
             this.Controls.Add(this.label6);
             this.Controls.Add(this.tb_status);
@@ -299,7 +299,7 @@
         private System.Windows.Forms.TextBox frontMail;
         private System.Windows.Forms.TextBox domain;
         private System.Windows.Forms.TextBox password;
-        private System.Windows.Forms.CheckBox cb_desktop;
+        private System.Windows.Forms.CheckBox cb_save;
         private System.Windows.Forms.CheckBox muleformat;
         private System.Windows.Forms.Button btn_about;
         private System.Windows.Forms.ProgressBar progressBar1;

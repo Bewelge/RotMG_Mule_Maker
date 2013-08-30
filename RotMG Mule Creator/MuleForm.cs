@@ -29,22 +29,25 @@ namespace RotMG_Mule_Creator
                     Directory.CreateDirectory(dir);
                 }
             }
-            catch
+            catch (Exception ex)
             {
-                MessageBox.Show("Failed to create MuleMaker folder, do your run it as admin?", "Failed to create folder", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                this.cb_save.Enabled = false;
+                this.muleformat.Enabled = false;
+                this.open_acc_folder.Enabled = false;
+                MessageBox.Show("Failed to create MuleMaker folder, do you run it as Administrator?\nTell it ossimc82:\n\n" + ex.ToString(), "Failed to create folder", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
             InitializeComponent();
 
             this.counter.Text = string.Format("{0} / {1}", i, Convert.ToInt32(amount_box.Value));
-            progressBar1.Maximum = Convert.ToInt32(amount_box.Value);
+            this.progressBar1.Maximum = Convert.ToInt32(amount_box.Value);
         }
 
         private void create_mules_Click(object sender, EventArgs e)
         {
-            tb_status.Clear();
-            progressBar1.Value = 0;
-            progressBar1.Minimum = 0;
-            progressBar1.Maximum = Convert.ToInt32(amount_box.Value);
+            this.tb_status.Clear();
+            this.progressBar1.Value = 0;
+            this.progressBar1.Minimum = 0;
+            this.progressBar1.Maximum = Convert.ToInt32(amount_box.Value);
             this.counter.Text = string.Format("{0} / {1}", 0, Convert.ToInt32(amount_box.Value));
 
             if (Convert.ToInt32(amount_box.Value) >= 500)
@@ -66,7 +69,7 @@ namespace RotMG_Mule_Creator
 
             for (i = 1; i <= count; i++)
             {
-                progressBar1.Increment(1);
+                this.progressBar1.Increment(1);
                 try
                 {
                     WebRequest webRequest = (WebRequest)WebRequest.Create("https://realmofthemadgod.appspot.com/account/register?guid=DDDDDDDD30A5B289EA856859A8&newGUID=" + frontMail.Text + i + "@" + domain.Text + "&ignore=7915&newPassword=" + password.Text + "&isAgeVerified=1");
@@ -80,7 +83,7 @@ namespace RotMG_Mule_Creator
                     {
                         status = "Success";
                         success++;
-                        if (cb_desktop.Checked)
+                        if (cb_save.Checked)
                         {
                             using (System.IO.StreamWriter writer = new System.IO.StreamWriter(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData) + @"\RotMG Mule Maker\Accounts.txt", true))
                             {
@@ -94,14 +97,12 @@ namespace RotMG_Mule_Creator
                                 writer.WriteLine("'" + frontMail.Text + i.ToString() + "@" + domain.Text + "': " + "'" + password.Text + "',");
                             }
                         }
-                        tb_status.Text = tb_status.Text + frontMail.Text + i.ToString() + "@" + domain.Text + " - Password: " + password.Text + "   -   " + status + @"
-";
                     }
                     else if (status.Contains("<Error>"))
                     {
+                        status = status.Replace("<Error>", "");
+                        status = status.Replace("</Error>", "");
                         fails++;
-                        tb_status.Text = tb_status.Text + frontMail.Text + i.ToString() + "@" + domain.Text + " - Password: " + password.Text + "   -   " + status + @"
-";
                         using (System.IO.StreamWriter writer = new System.IO.StreamWriter(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData) + @"\RotMG Mule Maker\AccountErrors.txt", true))
                         {
                             writer.WriteLine("[" + DateTime.Now + "]  -  " + frontMail.Text + i.ToString() + "@" + domain.Text + " - Password: " + password.Text + "   -   " + status);
@@ -117,6 +118,8 @@ namespace RotMG_Mule_Creator
 " + ex);
                     }
                 }
+                tb_status.Text = tb_status.Text + frontMail.Text + i.ToString() + "@" + domain.Text + " - Password: " + password.Text + "   -   " + status + @"
+";
                 counter.Text = string.Format("{0} / {1}", i, count);
             }
             MessageBox.Show(string.Format("{0} Mules Successful Created\n{1} Mules failed to create!", success, fails), "Summary!", MessageBoxButtons.OK, MessageBoxIcon.Information);
