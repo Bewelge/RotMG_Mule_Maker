@@ -44,21 +44,35 @@ namespace RotMG_Mule_Creator
 
         private void create_mules_Click(object sender, EventArgs e)
         {
-            this.tb_status.Clear();
-            this.progressBar1.Value = 0;
-            this.progressBar1.Minimum = 0;
-            this.progressBar1.Maximum = Convert.ToInt32(amount_box.Value);
-            this.counter.Text = string.Format("{0} / {1}", 0, Convert.ToInt32(amount_box.Value));
-
-            if (Convert.ToInt32(amount_box.Value) >= 500)
+            if (frontMail.Text.Contains(" ") || domain.Text.Contains(" "))
             {
-                DialogResult drg = MessageBox.Show("This can take a while, do you want continue?", "This will take a while", MessageBoxButtons.YesNo, MessageBoxIcon.Information);
+                DialogResult drg = MessageBox.Show("Email doesnt allow spaces!\n\nShould I remove them?", "Invalid Arguments", MessageBoxButtons.YesNo, MessageBoxIcon.Exclamation);
                 if (drg == System.Windows.Forms.DialogResult.Yes)
-                    CreateMule(Convert.ToInt32(amount_box.Value));
+                {
+                    frontMail.Text = frontMail.Text.Replace(" ", "");
+                    domain.Text = domain.Text.Replace(" ", "");
+                    if (!frontMail.Text.Contains(" ") || !domain.Text.Contains(" "))
+                        MessageBox.Show("Spaces sucessful removed", "Sucess", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    else
+                        MessageBox.Show("Could not remove the spaces, please do it manualy.", "Mhhh that didn't work", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                }
             }
             else
             {
-                CreateMule(Convert.ToInt32(amount_box.Value));
+                this.tb_status.Clear();
+                this.progressBar1.Value = 0;
+                this.progressBar1.Minimum = 0;
+                this.progressBar1.Maximum = Convert.ToInt32(amount_box.Value);
+                this.counter.Text = string.Format("{0} / {1}", 0, Convert.ToInt32(amount_box.Value));
+
+                if (Convert.ToInt32(amount_box.Value) >= 500)
+                {
+                    DialogResult drg = MessageBox.Show("This can take a while, do you want continue?", "This will take a while", MessageBoxButtons.YesNo, MessageBoxIcon.Information);
+                    if (drg == System.Windows.Forms.DialogResult.Yes)
+                        CreateMule(Convert.ToInt32(amount_box.Value));
+                }
+                else
+                    CreateMule(Convert.ToInt32(amount_box.Value));
             }
         }
 
